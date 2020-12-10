@@ -10,7 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using SkyShield.WebApi.Models;
+using SkyShield.WebApi.Services;
 
 namespace SkyShield.WebApi
 {
@@ -26,12 +29,21 @@ namespace SkyShield.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+			services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SkyShield.WebApi", Version = "v1" });
             });
+			
+			services.Configure<ChatDatabaseSettings>(
+				Configuration.GetSection(nameof(ChatDatabaseSettings))
+			);
+			services.AddSingleton<IChatDatabaseSettings>(serviceProvider =>
+				serviceProvider.GetRequiredService<IOptions<ChatDatabaseSettings>>().Value
+			);
+
+			services.AddSingleton<MessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +58,10 @@ namespace SkyShield.WebApi
 
             app.UseHttpsRedirection();
 
+			app.UseDefaultFiles();
+			app.UseStaticFiles();
+
+			app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
             app.UseRouting();
 
             app.UseAuthorization();
