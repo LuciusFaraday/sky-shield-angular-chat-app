@@ -1,0 +1,6 @@
+<mat-selection-list #_contacts [multiple]="false">
+	<mat-list-option *ngFor="let contact of contacts" [value]="contact">
+		<mat-icon mat-list-icon>person</mat-icon>
+		<div mat-line>{{ contact.username }}</div>
+	</mat-list-option>
+</mat-selection-list>

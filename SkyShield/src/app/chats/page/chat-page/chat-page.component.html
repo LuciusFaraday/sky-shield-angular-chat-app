@@ -1,0 +1,17 @@
+<top-app-bar></top-app-bar>
+<!-- <mat-grid-list cols="3" rowHeight="100%">
+	<mat-grid-tile [colspan]="1" >
+		<contact-list></contact-list>
+	</mat-grid-tile>
+	<mat-grid-tile [colspan]="2">
+		<chat-window></chat-window>
+	</mat-grid-tile>
+</mat-grid-list> -->
+<mat-drawer-container class="chat-drawer">
+	<mat-drawer mode="side" opened>
+		<contact-list></contact-list>
+	</mat-drawer>
+	<mat-drawer-content>
+		<chat-window></chat-window>
+	</mat-drawer-content>
+</mat-drawer-container>

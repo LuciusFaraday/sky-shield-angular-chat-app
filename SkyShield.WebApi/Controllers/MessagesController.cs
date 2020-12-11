@@ -21,16 +21,10 @@ namespace SkyShield.WebApi.Controllers
 			_messageService.Get();
 
 		[HttpGet("{id:length(24)}")]
-		public ActionResult<Message> Get(string id)
+		public ActionResult<List<Message>> Get(string id)
 		{
-			Message message = _messageService.Get(id);
-
-			if (message == null)
-			{
-				return NotFound();
-			}
-
-			return message;
+			List<Message> messages = _messageService.Get(id);
+			return messages;
 		}
 	}
 }

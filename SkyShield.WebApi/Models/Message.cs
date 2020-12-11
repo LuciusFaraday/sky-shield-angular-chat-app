@@ -14,9 +14,9 @@ namespace SkyShield.WebApi.Models
 
 		public DateTime Uploaded { get; set; }
 
-		public int SenderUserId { get; set; }
+		public string SenderUserId { get; set; }
 		
-		public int RecipientUserId { get; set; }
+		public string RecipientUserId { get; set; }
 
 	}
 }

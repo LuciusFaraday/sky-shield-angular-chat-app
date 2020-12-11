@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MongoDB.Driver;
 using SkyShield.WebApi.Models;
@@ -19,11 +20,18 @@ namespace SkyShield.WebApi.Services
 		public List<Message> Get() =>
 			_messages.Find(message => true).ToList<Message>();
 		
-		public Message Get(string id) =>
-			_messages.Find(message => message.Id == id).FirstOrDefault();
+		public List<Message> Get(string id)
+		{
+			List<Message> messages = _messages
+				.Find(message => message.SenderUserId == id || message.RecipientUserId == id)
+				.ToList<Message>();
+			
+			return messages;
+		}
 		
 		public Message Add(Message message)
 		{
+			message.Uploaded = DateTime.Now;
 			_messages.InsertOne(message);
 			return message;
 		}
