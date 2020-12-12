@@ -20,10 +20,12 @@ namespace SkyShield.WebApi.Services
 		public List<Message> Get() =>
 			_messages.Find(message => true).ToList<Message>();
 		
-		public List<Message> Get(string id)
+		public List<Message> Get(string id1, string id2)
 		{
 			List<Message> messages = _messages
-				.Find(message => message.SenderUserId == id || message.RecipientUserId == id)
+				.Find(message => 
+					(message.SenderUserId == id1 && message.RecipientUserId == id2) ||
+					(message.SenderUserId == id2 && message.RecipientUserId == id1))
 				.ToList<Message>();
 			
 			return messages;
@@ -32,6 +34,7 @@ namespace SkyShield.WebApi.Services
 		public Message Add(Message message)
 		{
 			message.Uploaded = DateTime.Now;
+
 			_messages.InsertOne(message);
 			return message;
 		}

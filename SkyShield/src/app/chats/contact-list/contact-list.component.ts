@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 import { User } from 'src/app/models/user';
 import { ChatService } from 'src/app/services/chat.service';
 
@@ -11,6 +12,8 @@ import { ChatService } from 'src/app/services/chat.service';
 export class ContactListComponent implements OnInit {
 
 	contacts: User[] = [];
+
+	@Output() selectedContactEvent = new EventEmitter<User>();
 	constructor(
 		private chatService: ChatService
 	) {
@@ -18,7 +21,12 @@ export class ContactListComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.contacts = this.chatService.contacts;
+		this.chatService.getContacts().subscribe(observer => this.contacts = observer);
+	}
+
+	onSelect(contact: User): void {
+		// this.chatService.recipientUser = contact;
+		this.selectedContactEvent.emit(contact);
 	}
 
 }

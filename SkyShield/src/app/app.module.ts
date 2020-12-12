@@ -11,6 +11,8 @@ import { MessageCloudComponent } from './chats/message-cloud/message-cloud.compo
 import { ChatPageComponent } from './chats/page/chat-page/chat-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialsModule } from './materials/materials.module';
+import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -21,13 +23,15 @@ import { MaterialsModule } from './materials/materials.module';
 		TopAppBarComponent,
 		ChatCardComponent,
 		MessageCloudComponent,
-		ChatPageComponent
+		ChatPageComponent,
+		LoginPageComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		MaterialsModule
+		MaterialsModule,
+		HttpClientModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

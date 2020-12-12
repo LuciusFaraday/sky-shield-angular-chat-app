@@ -39,11 +39,18 @@ namespace SkyShield.WebApi
 			services.Configure<ChatDatabaseSettings>(
 				Configuration.GetSection(nameof(ChatDatabaseSettings))
 			);
+			services.Configure<UserDatabaseSettings>(
+				Configuration.GetSection(nameof(UserDatabaseSettings))
+			);
 			services.AddSingleton<IChatDatabaseSettings>(serviceProvider =>
 				serviceProvider.GetRequiredService<IOptions<ChatDatabaseSettings>>().Value
 			);
+			services.AddSingleton<IUserDatabaseSettings>(serviceProvider =>
+				serviceProvider.GetRequiredService<IOptions<UserDatabaseSettings>>().Value
+			);
 
 			services.AddSingleton<MessageService>();
+			services.AddSingleton<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,10 +21,16 @@ namespace SkyShield.WebApi.Controllers
 			_messageService.Get();
 
 		[HttpGet("{id:length(24)}")]
-		public ActionResult<List<Message>> Get(string id)
+		public ActionResult<List<Message>> Get(string id1, string id2)
 		{
-			List<Message> messages = _messageService.Get(id);
+			List<Message> messages = _messageService.Get(id1, id2);
 			return messages;
+		}
+
+		[HttpPost]
+		public ActionResult<Message> Post(Message message)
+		{
+			return _messageService.Add(message);
 		}
 	}
 }
